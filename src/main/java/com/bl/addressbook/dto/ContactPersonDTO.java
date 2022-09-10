@@ -13,5 +13,5 @@ public class ContactPersonDTO {
     private String name;
     private String address;
     private String city;
-    private List<Long> phoneNumber;
+    private List<Long> phoneNumbers;
 }

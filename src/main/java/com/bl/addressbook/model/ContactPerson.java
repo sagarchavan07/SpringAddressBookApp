@@ -1,5 +1,7 @@
 package com.bl.addressbook.model;
 
+import com.bl.addressbook.dto.ContactPersonDTO;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,17 +17,23 @@ public class ContactPerson {
     private String address;
     private String city;
     @ElementCollection
-    private List<Long> phoneNumber;
+    private List<Long> phoneNumbers;
 
     public ContactPerson() {
     }
 
-    public ContactPerson(Long personId, String name, String address, String city, List<Long> phoneNumber) {
-        this.personId = personId;
+    public ContactPerson(String name, String address, String city, List<Long> phoneNumbers) {
         this.name = name;
         this.address = address;
         this.city = city;
-        this.phoneNumber = phoneNumber;
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public ContactPerson(ContactPersonDTO contactPersonDTO) {
+        this.name = contactPersonDTO.getName();
+        this.address = contactPersonDTO.getAddress();
+        this.city = contactPersonDTO.getCity();
+        this.phoneNumbers = contactPersonDTO.getPhoneNumbers();
     }
 
     public Long getPersonId() {
@@ -60,12 +68,12 @@ public class ContactPerson {
         this.city = city;
     }
 
-    public List<Long> getPhoneNumber() {
-        return phoneNumber;
+    public List<Long> getPhoneNumbers() {
+        return phoneNumbers;
     }
 
-    public void setPhoneNumber(List<Long> phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumbers(List<Long> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     @Override
@@ -75,7 +83,7 @@ public class ContactPerson {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", city='" + city + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                ", phoneNumbers=" + phoneNumbers +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.bl.addressbook.service;
 
 import com.bl.addressbook.dto.ContactPersonDTO;
 import com.bl.addressbook.dto.ResponseDTO;
+import com.bl.addressbook.email.EmailService;
 import com.bl.addressbook.exception.AddressBookException;
 import com.bl.addressbook.model.ContactPerson;
 import com.bl.addressbook.repository.AddressBookRepository;
@@ -11,10 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AddressBookService {
+public class AddressBookService implements IAddressBookService{
 
     @Autowired
     AddressBookRepository addressBookRepository;
+
+    @Autowired
+    EmailService emailService;
 
     public ResponseEntity<ResponseDTO> welcomeMessage() {
         ResponseDTO responseDTO = new ResponseDTO("GET call success", "Welcome to AddressBook Application");
@@ -47,7 +51,9 @@ public class AddressBookService {
     }
 
     public ResponseEntity<ResponseDTO> addContact(ContactPersonDTO contactPersonDTO) {
-        ResponseDTO responseDTO = new ResponseDTO("Contact Added Successfully", addressBookRepository.save(new ContactPerson(contactPersonDTO)));
+        ContactPerson contact = new ContactPerson(contactPersonDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Contact Added Successfully", addressBookRepository.save(contact));
+        emailService.sendMail("${EMAIL}","new Contact Added", "new Contact added to the address book\nContact Details:\n"+contact.toJson());
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 

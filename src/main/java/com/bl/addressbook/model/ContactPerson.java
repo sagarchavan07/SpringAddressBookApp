@@ -86,4 +86,12 @@ public class ContactPerson {
                 ", phoneNumbers=" + phoneNumbers +
                 '}';
     }
+
+    public String toJson() {
+        return  "\npersonId: " + personId +
+                ", \nname: " + name +
+                ", \naddress: " + address +
+                ", \ncity: " + city +
+                ", \nphoneNumbers: " + phoneNumbers;
+    }
 }

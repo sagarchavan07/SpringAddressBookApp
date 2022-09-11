@@ -16,7 +16,7 @@ jmx.log
 derby.log
 application.log
 application.log.*.gz
-applicationTest.log
+application-prod.log
 
 # Gradle artifacts
 .gradle
